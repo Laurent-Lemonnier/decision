@@ -1,0 +1,62 @@
+{
+  "@context": [
+    "https://w3id.org/decision/context.jsonld",
+    {
+      "replaces": {
+        "@id": "http://purl.org/dc/terms/replaces",
+        "@type": "@id"
+      }
+    }
+  ],
+  "@graph": [
+    {
+      "id": "urn:example:decision:site-fix:1",
+      "type": "Decision",
+      "label": "Apply the fix to the client's website and tell the client",
+      "whyNow": "The client wrote that a page shows an error, and the cause was found in one file.",
+      "nature": "Validation",
+      "option": [
+        "urn:example:decision:site-fix:1:plan-v1"
+      ],
+      "recommendedOption": "urn:example:decision:site-fix:1:plan-v1",
+      "chosenOption": "urn:example:decision:site-fix:1:plan-v1",
+      "magnitude": {
+        "value": "2",
+        "unit": "files changed"
+      },
+      "reversibility": "Irreversible",
+      "affectsThirdParty": true,
+      "legalEffect": false,
+      "factualBasis": "SourcesRead",
+      "requiredOversight": "Signature",
+      "outcome": "Approved",
+      "classifiedUnder": "urn:example:policy:maintenance:1",
+      "classifiedBy": "urn:example:system:maintenance-desk"
+    },
+    {
+      "id": "urn:example:decision:site-fix:2",
+      "type": "Decision",
+      "label": "Run the remaining steps of the fix and tell the client",
+      "whyNow": "The check after the first run failed and every change was rolled back. The check was wrong, not the fix. The remaining steps need a new approval.",
+      "replaces": "urn:example:decision:site-fix:1",
+      "nature": "Validation",
+      "option": [
+        "urn:example:decision:site-fix:2:plan-v3"
+      ],
+      "recommendedOption": "urn:example:decision:site-fix:2:plan-v3",
+      "chosenOption": "urn:example:decision:site-fix:2:plan-v3",
+      "magnitude": {
+        "value": "2",
+        "unit": "files changed"
+      },
+      "reversibility": "Irreversible",
+      "affectsThirdParty": true,
+      "legalEffect": false,
+      "factualBasis": "SourcesRead",
+      "requiredOversight": "Signature",
+      "outcome": "Approved",
+      "classifiedUnder": "urn:example:policy:maintenance:1",
+      "classifiedBy": "urn:example:system:maintenance-desk"
+    }
+  ]
+}

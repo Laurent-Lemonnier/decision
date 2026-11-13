@@ -1,0 +1,8 @@
+# Decisions that carry a classification (nature, reversibility or required oversight) and name no policy.
+PREFIX dec: <https://w3id.org/decision#>
+SELECT DISTINCT ?decision WHERE {
+  ?decision a dec:Decision .
+  { ?decision dec:nature ?x } UNION { ?decision dec:reversibility ?x } UNION { ?decision dec:requiredOversight ?x }
+  FILTER NOT EXISTS { ?decision dec:classifiedUnder ?policy }
+}
+ORDER BY ?decision

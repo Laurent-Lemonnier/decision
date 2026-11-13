@@ -1,0 +1,10 @@
+# Decisions whose action cannot be undone, reaches a third party, and went through with less than a signature.
+PREFIX dec: <https://w3id.org/decision#>
+SELECT ?decision ?oversight WHERE {
+  ?decision a dec:Decision ;
+            dec:reversibility dec:Irreversible ;
+            dec:affectsThirdParty true ;
+            dec:requiredOversight ?oversight .
+  FILTER (?oversight != dec:Signature)
+}
+ORDER BY ?decision

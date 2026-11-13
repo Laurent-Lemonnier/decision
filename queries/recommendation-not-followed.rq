@@ -1,0 +1,9 @@
+# Decisions where the person retained an option other than the one recommended.
+PREFIX dec: <https://w3id.org/decision#>
+SELECT ?decision ?recommended ?chosen WHERE {
+  ?decision a dec:Decision ;
+            dec:recommendedOption ?recommended ;
+            dec:chosenOption ?chosen .
+  FILTER (?recommended != ?chosen)
+}
+ORDER BY ?decision

@@ -1,0 +1,25 @@
+{
+  "@context": "https://w3id.org/decision/context.jsonld",
+  "id": "urn:example:decision:quotes-0912",
+  "type": "Decision",
+  "label": "Which of three insurance quotes to recommend to the client",
+  "whyNow": "The client's current contract ends in thirty days and the three quotes requested have arrived.",
+  "deadline": "2026-12-12T17:00:00Z",
+  "nature": "Arbitration",
+  "option": [
+    "urn:example:decision:quotes-0912:quote-a",
+    "urn:example:decision:quotes-0912:quote-b",
+    "urn:example:decision:quotes-0912:quote-c"
+  ],
+  "recommendedOption": "urn:example:decision:quotes-0912:quote-b",
+  "chosenOption": "urn:example:decision:quotes-0912:quote-a",
+  "magnitude": {"value": "1840.00", "unit": "EUR per year"},
+  "reversibility": "Irreversible",
+  "affectsThirdParty": true,
+  "legalEffect": false,
+  "factualBasis": "SourcesCited",
+  "requiredOversight": "Confirmation",
+  "outcome": "Approved",
+  "classifiedUnder": "urn:example:policy:advice:2",
+  "classifiedBy": "urn:example:person:office-manager"
+}

@@ -1,0 +1,14 @@
+{
+  "@context": "https://w3id.org/decision/context.jsonld",
+  "id": "urn:example:decision:cert-renewal-alert",
+  "type": "Decision",
+  "label": "A certificate failed to renew three days running",
+  "whyNow": "Third failure notice in four days; the certificate expires in nineteen days.",
+  "deadline": "2026-12-02T00:00:00Z",
+  "nature": "Alert",
+  "affectsThirdParty": false,
+  "factualBasis": "SourcesCited",
+  "outcome": "Deferred",
+  "classifiedUnder": "urn:example:policy:operations:1",
+  "classifiedBy": "urn:example:system:operations-watch"
+}

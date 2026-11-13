@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: "decision: a small vocabulary for the characteristics of a decision put to a person"
+message: "If you use this vocabulary, please cite it as below. It is a vocabulary, not a standard."
+type: software
+authors:
+  - family-names: Lemonnier
+    given-names: Laurent
+repository-code: "https://github.com/Laurent-Lemonnier/decision"
+url: "https://w3id.org/decision"
+license: Apache-2.0
+version: 0.1.0
+date-released: 2026-11-13

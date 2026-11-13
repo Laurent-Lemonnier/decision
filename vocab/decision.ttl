@@ -1,0 +1,142 @@
+@prefix dec:  <https://w3id.org/decision#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix schema: <https://schema.org/> .
+
+<https://w3id.org/decision> a owl:Ontology ;
+    dcterms:title "decision: a small vocabulary for the characteristics of a decision put to a person"@en ;
+    dcterms:creator "Laurent Lemonnier" ;
+    dcterms:issued "2026-11-13"^^xsd:date ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    rdfs:comment "A vocabulary, not a standard. Two classes, sixteen properties and four lists of values. It describes the decision itself; it says nothing of where a record came from, how it is signed or how it is verified."@en .
+
+# Classes
+
+dec:Decision a rdfs:Class ;
+    rdfs:label "Decision"@en ;
+    rdfs:comment "A choice put to one accountable person, or made by that person, about whether and how an action is taken. One Decision has at most one outcome."@en .
+
+dec:Option a rdfs:Class ;
+    rdfs:label "Option"@en ;
+    rdfs:comment "A course of action put to the person in a Decision."@en .
+
+# Properties: what was put
+
+dec:whyNow a rdf:Property ;
+    rdfs:label "why now"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:string ;
+    rdfs:comment "The reason the decision is put to the person at this time, in one or two sentences."@en .
+
+dec:option a rdf:Property ;
+    rdfs:label "option"@en ; rdfs:domain dec:Decision ; rdfs:range dec:Option ;
+    rdfs:comment "An option put to the person. Criterion: it was on the screen or in the document the person decided from."@en .
+
+dec:recommendedOption a rdf:Property ;
+    rdfs:label "recommended option"@en ; rdfs:domain dec:Decision ; rdfs:range dec:Option ;
+    rdfs:comment "The option whoever prepared the decision recommended, when one was recommended. It is one of the options put."@en .
+
+dec:chosenOption a rdf:Property ;
+    rdfs:label "chosen option"@en ; rdfs:domain dec:Decision ; rdfs:range dec:Option ;
+    rdfs:comment "The option the person retained. Absent when the outcome is Refused or Deferred."@en .
+
+dec:deadline a rdf:Property ;
+    rdfs:label "deadline"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:dateTime ;
+    rdfs:comment "The time after which the decision has no object, or after which a stated consequence follows. Absent when none was stated: absence is not 'no deadline'."@en .
+
+# Properties: characteristics with listed values
+
+dec:nature a rdf:Property ;
+    rdfs:label "nature"@en ; rdfs:domain dec:Decision ; rdfs:range skos:Concept ;
+    rdfs:comment "What kind of choice was put, by the number of options put: none (Alert), one (Validation), two or more (Arbitration)."@en .
+
+dec:reversibility a rdf:Property ;
+    rdfs:label "reversibility"@en ; rdfs:domain dec:Decision ; rdfs:range skos:Concept ;
+    rdfs:comment "Whether the action decided can be undone. For a decision covering several operations, the least reversible of them."@en .
+
+dec:factualBasis a rdf:Property ;
+    rdfs:label "factual basis"@en ; rdfs:domain dec:Decision ; rdfs:range skos:Concept ;
+    rdfs:comment "How the facts the proposal relies on were sourced when the decision was put."@en .
+
+dec:requiredOversight a rdf:Property ;
+    rdfs:label "required oversight"@en ; rdfs:domain dec:Decision ; rdfs:range skos:Concept ;
+    rdfs:comment "The least a person had to do, under the policy named by classifiedUnder, before the action could proceed."@en .
+
+dec:outcome a rdf:Property ;
+    rdfs:label "outcome"@en ; rdfs:domain dec:Decision ; rdfs:range skos:Concept ;
+    rdfs:comment "What the person decided. Absent while the decision is open."@en .
+
+# Properties: stakes
+
+dec:magnitude a rdf:Property ;
+    rdfs:label "magnitude"@en ; rdfs:domain dec:Decision ; rdfs:range schema:QuantitativeValue ;
+    rdfs:comment "The size of what is decided, as a number and a unit stated in the proposal (an amount and a currency, a number of people, a number of files). Absent when the proposal states none: absence is not zero."@en .
+
+dec:affectsThirdParty a rdf:Property ;
+    rdfs:label "affects a third party"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:boolean ;
+    rdfs:comment "True when the action, once taken, reaches a person or an organisation outside the decider's own: a message sent to them, a payment, a publication, a change to their data or their contract."@en .
+
+dec:legalEffect a rdf:Property ;
+    rdfs:label "legal effect"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:boolean ;
+    rdfs:comment "True when the action creates, changes or ends a right or an obligation of a person, or similarly significantly affects that person."@en .
+
+# Properties: who classified, and where the decision is recorded
+
+dec:classifiedUnder a rdf:Property ;
+    rdfs:label "classified under"@en ; rdfs:domain dec:Decision ;
+    rdfs:comment "The policy, with its version, under which nature, reversibility and required oversight were assigned: an IRI, or an identifier the organisation publishes. A classification with no policy named is an opinion."@en .
+
+dec:classifiedBy a rdf:Property ;
+    rdfs:label "classified by"@en ; rdfs:domain dec:Decision ;
+    rdfs:comment "Who or what applied the policy: a person, or a named system applying declared rules."@en .
+
+dec:recordedIn a rdf:Property ;
+    rdfs:label "recorded in"@en ; rdfs:domain dec:Decision ;
+    rdfs:comment "A document that records this decision, named by an IRI or by a digest of its bytes. This vocabulary does not say what the record must contain, nor how it is verified."@en .
+
+# Values
+
+dec:NatureScheme a skos:ConceptScheme ; rdfs:label "Nature of a decision"@en .
+dec:Alert a skos:Concept ; skos:inScheme dec:NatureScheme ; skos:prefLabel "Alert"@en ;
+    skos:definition "A signal was put with no prepared proposal; the person decides whether anything is to be done. Criterion: no option was put."@en .
+dec:Validation a skos:Concept ; skos:inScheme dec:NatureScheme ; skos:prefLabel "Validation"@en ;
+    skos:definition "One prepared proposal was put; the person accepts it, changes it or refuses it. Criterion: exactly one option was put."@en .
+dec:Arbitration a skos:Concept ; skos:inScheme dec:NatureScheme ; skos:prefLabel "Arbitration"@en ;
+    skos:definition "Two or more options were put; the person chooses. Criterion: at least two options were put."@en .
+
+dec:ReversibilityScheme a skos:ConceptScheme ; rdfs:label "Reversibility"@en .
+dec:Reversible a skos:Concept ; skos:inScheme dec:ReversibilityScheme ; skos:prefLabel "Reversible"@en ;
+    skos:definition "A declared operation restores the state that existed before the action, and the decider's organisation can run it alone."@en .
+dec:Compensable a skos:Concept ; skos:inScheme dec:ReversibilityScheme ; skos:prefLabel "Compensable"@en ;
+    skos:definition "The action cannot be undone, but a declared second action offsets its effect: a refund after a payment, a correction after a publication."@en .
+dec:Irreversible a skos:Concept ; skos:inScheme dec:ReversibilityScheme ; skos:prefLabel "Irreversible"@en ;
+    skos:definition "No declared operation restores the earlier state or offsets the effect: a message read by its recipient, a disclosure, a deletion without a copy."@en .
+
+dec:FactualBasisScheme a skos:ConceptScheme ; rdfs:label "Factual basis"@en .
+dec:SourcesRead a skos:Concept ; skos:inScheme dec:FactualBasisScheme ; skos:prefLabel "Sources read"@en ;
+    skos:definition "Every fact the proposal relies on names a source, and each source was read for this decision."@en .
+dec:SourcesCited a skos:Concept ; skos:inScheme dec:FactualBasisScheme ; skos:prefLabel "Sources cited"@en ;
+    skos:definition "The proposal names sources for its facts, and at least one was not read again for this decision."@en .
+dec:Unsourced a skos:Concept ; skos:inScheme dec:FactualBasisScheme ; skos:prefLabel "Unsourced"@en ;
+    skos:definition "At least one fact the proposal relies on names no source."@en .
+
+dec:OversightScheme a skos:ConceptScheme ; rdfs:label "Required oversight"@en .
+dec:NoApproval a skos:Concept ; skos:inScheme dec:OversightScheme ; skos:prefLabel "No approval"@en ;
+    skos:definition "The policy lets the action proceed without a person: a read, an observation."@en .
+dec:Confirmation a skos:Concept ; skos:inScheme dec:OversightScheme ; skos:prefLabel "Confirmation"@en ;
+    skos:definition "An authenticated person confirms in an open session. What was confirmed is known from the system's own log."@en .
+dec:Signature a skos:Concept ; skos:inScheme dec:OversightScheme ; skos:prefLabel "Signature"@en ;
+    skos:definition "A person signs the exact content approved, its bytes or a digest of them, so that the approval can be checked afterwards without the system that collected it."@en .
+
+dec:OutcomeScheme a skos:ConceptScheme ; rdfs:label "Outcome"@en .
+dec:Approved a skos:Concept ; skos:inScheme dec:OutcomeScheme ; skos:prefLabel "Approved"@en ;
+    skos:definition "The person accepted an option as it was put."@en .
+dec:Amended a skos:Concept ; skos:inScheme dec:OutcomeScheme ; skos:prefLabel "Amended"@en ;
+    skos:definition "The person accepted an option after changing it, or after asking for it to be changed."@en .
+dec:Refused a skos:Concept ; skos:inScheme dec:OutcomeScheme ; skos:prefLabel "Refused"@en ;
+    skos:definition "The person decided that no option put is to be carried out."@en .
+dec:Deferred a skos:Concept ; skos:inScheme dec:OutcomeScheme ; skos:prefLabel "Deferred"@en ;
+    skos:definition "The person set the decision aside without accepting or refusing; it may be put again."@en .

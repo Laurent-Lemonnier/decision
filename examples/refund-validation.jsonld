@@ -1,0 +1,21 @@
+{
+  "@context": "https://w3id.org/decision/context.jsonld",
+  "id": "urn:example:decision:refund-4471",
+  "type": "Decision",
+  "label": "Refund 120.00 EUR to the customer for a duplicate charge",
+  "whyNow": "The customer reported the duplicate charge this morning and the agent has prepared the refund.",
+  "nature": "Validation",
+  "option": ["urn:example:decision:refund-4471:option-1"],
+  "recommendedOption": "urn:example:decision:refund-4471:option-1",
+  "chosenOption": "urn:example:decision:refund-4471:option-1",
+  "magnitude": {"value": "120.00", "unit": "EUR"},
+  "reversibility": "Irreversible",
+  "affectsThirdParty": true,
+  "legalEffect": true,
+  "factualBasis": "SourcesRead",
+  "requiredOversight": "Signature",
+  "outcome": "Approved",
+  "classifiedUnder": "urn:example:policy:support-refunds:3",
+  "classifiedBy": "urn:example:system:support-desk",
+  "recordedIn": ["https://github.com/Laurent-Lemonnier/dps-scitt-decision-layer/tree/main/interop/aer1-decision"]
+}
