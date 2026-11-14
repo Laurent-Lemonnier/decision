@@ -10,5 +10,12 @@
   "factualBasis": "SourcesCited",
   "outcome": "Deferred",
   "classifiedUnder": "urn:example:policy:operations:1",
-  "classifiedBy": "urn:example:system:operations-watch"
+  "classifiedBy": "urn:example:system:operations-watch",
+  "decider": "urn:example:person:owner",
+  "preparedBy": "urn:example:system:operations-watch",
+  "urgency": "SameDay",
+  "putAt": "2026-11-13T10:15:00Z",
+  "decidedAt": "2026-11-13T21:20:00Z",
+  "recommendationShown": "NotShown",
+  "reviewTrigger": "A fourth failure notice, or ten days before the certificate expires."
 }

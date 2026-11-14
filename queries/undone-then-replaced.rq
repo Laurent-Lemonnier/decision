@@ -1,0 +1,8 @@
+# Decisions whose action was undone, and the decision that took their place.
+PREFIX dec: <https://w3id.org/decision#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+SELECT ?undone ?replacement WHERE {
+  ?undone a dec:Decision ; dec:execution dec:Undone .
+  ?replacement dcterms:replaces ?undone .
+}
+ORDER BY ?undone

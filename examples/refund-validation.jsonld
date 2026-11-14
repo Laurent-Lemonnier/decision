@@ -5,10 +5,15 @@
   "label": "Refund 120.00 EUR to the customer for a duplicate charge",
   "whyNow": "The customer reported the duplicate charge this morning and the agent has prepared the refund.",
   "nature": "Validation",
-  "option": ["urn:example:decision:refund-4471:option-1"],
+  "option": [
+    "urn:example:decision:refund-4471:option-1"
+  ],
   "recommendedOption": "urn:example:decision:refund-4471:option-1",
   "chosenOption": "urn:example:decision:refund-4471:option-1",
-  "magnitude": {"value": "120.00", "unit": "EUR"},
+  "magnitude": {
+    "value": "120.00",
+    "unit": "EUR"
+  },
   "reversibility": "Irreversible",
   "affectsThirdParty": true,
   "legalEffect": true,
@@ -17,5 +22,22 @@
   "outcome": "Approved",
   "classifiedUnder": "urn:example:policy:support-refunds:3",
   "classifiedBy": "urn:example:system:support-desk",
-  "recordedIn": ["https://github.com/Laurent-Lemonnier/dps-scitt-decision-layer/tree/main/interop/aer1-decision"]
+  "recordedIn": [
+    "https://github.com/Laurent-Lemonnier/dps-scitt-decision-layer/tree/main/interop/aer1-decision"
+  ],
+  "decider": "urn:example:person:support-lead",
+  "preparedBy": "urn:example:system:support-agent",
+  "objective": "Give the customer back the amount charged twice.",
+  "contextVersion": "urn:example:order-8812:charges:v4",
+  "shownContent": "urn:example:view:refund-4471:v1",
+  "putAt": "2026-11-05T09:05:20Z",
+  "decidedAt": "2026-11-05T09:07:00Z",
+  "rankInSession": 1,
+  "sourcesOpened": 2,
+  "urgency": "SameDay",
+  "recommendationShown": "BeforeChoice",
+  "successCriterion": [
+    "The payment gateway reports a refund of 120.00 EUR as settled."
+  ],
+  "execution": "CarriedOut"
 }

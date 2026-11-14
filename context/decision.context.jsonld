@@ -10,23 +10,73 @@
     "Option": "dec:Option",
     "label": "http://www.w3.org/2000/01/rdf-schema#label",
     "whyNow": "dec:whyNow",
-    "option": {"@id": "dec:option", "@type": "@id", "@container": "@set"},
-    "recommendedOption": {"@id": "dec:recommendedOption", "@type": "@id"},
-    "chosenOption": {"@id": "dec:chosenOption", "@type": "@id"},
-    "deadline": {"@id": "dec:deadline", "@type": "xsd:dateTime"},
-    "nature": {"@id": "dec:nature", "@type": "@vocab"},
-    "reversibility": {"@id": "dec:reversibility", "@type": "@vocab"},
-    "factualBasis": {"@id": "dec:factualBasis", "@type": "@vocab"},
-    "requiredOversight": {"@id": "dec:requiredOversight", "@type": "@vocab"},
-    "outcome": {"@id": "dec:outcome", "@type": "@vocab"},
-    "magnitude": {"@id": "dec:magnitude", "@type": "@id"},
-    "value": {"@id": "schema:value", "@type": "xsd:decimal"},
+    "option": {
+      "@id": "dec:option",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "recommendedOption": {
+      "@id": "dec:recommendedOption",
+      "@type": "@id"
+    },
+    "chosenOption": {
+      "@id": "dec:chosenOption",
+      "@type": "@id"
+    },
+    "deadline": {
+      "@id": "dec:deadline",
+      "@type": "xsd:dateTime"
+    },
+    "nature": {
+      "@id": "dec:nature",
+      "@type": "@vocab"
+    },
+    "reversibility": {
+      "@id": "dec:reversibility",
+      "@type": "@vocab"
+    },
+    "factualBasis": {
+      "@id": "dec:factualBasis",
+      "@type": "@vocab"
+    },
+    "requiredOversight": {
+      "@id": "dec:requiredOversight",
+      "@type": "@vocab"
+    },
+    "outcome": {
+      "@id": "dec:outcome",
+      "@type": "@vocab"
+    },
+    "magnitude": {
+      "@id": "dec:magnitude",
+      "@type": "@id"
+    },
+    "value": {
+      "@id": "schema:value",
+      "@type": "xsd:decimal"
+    },
     "unit": "schema:unitText",
-    "affectsThirdParty": {"@id": "dec:affectsThirdParty", "@type": "xsd:boolean"},
-    "legalEffect": {"@id": "dec:legalEffect", "@type": "xsd:boolean"},
-    "classifiedUnder": {"@id": "dec:classifiedUnder", "@type": "@id"},
-    "classifiedBy": {"@id": "dec:classifiedBy", "@type": "@id"},
-    "recordedIn": {"@id": "dec:recordedIn", "@type": "@id", "@container": "@set"},
+    "affectsThirdParty": {
+      "@id": "dec:affectsThirdParty",
+      "@type": "xsd:boolean"
+    },
+    "legalEffect": {
+      "@id": "dec:legalEffect",
+      "@type": "xsd:boolean"
+    },
+    "classifiedUnder": {
+      "@id": "dec:classifiedUnder",
+      "@type": "@id"
+    },
+    "classifiedBy": {
+      "@id": "dec:classifiedBy",
+      "@type": "@id"
+    },
+    "recordedIn": {
+      "@id": "dec:recordedIn",
+      "@type": "@id",
+      "@container": "@set"
+    },
     "Alert": "dec:Alert",
     "Validation": "dec:Validation",
     "Arbitration": "dec:Arbitration",
@@ -42,6 +92,75 @@
     "Approved": "dec:Approved",
     "Amended": "dec:Amended",
     "Refused": "dec:Refused",
-    "Deferred": "dec:Deferred"
+    "Deferred": "dec:Deferred",
+    "decider": {
+      "@id": "dec:decider",
+      "@type": "@id"
+    },
+    "preparedBy": {
+      "@id": "dec:preparedBy",
+      "@type": "@id"
+    },
+    "objective": "dec:objective",
+    "assumption": {
+      "@id": "dec:assumption",
+      "@container": "@set"
+    },
+    "statedRisk": {
+      "@id": "dec:statedRisk",
+      "@container": "@set"
+    },
+    "contextVersion": "dec:contextVersion",
+    "shownContent": "dec:shownContent",
+    "putAt": {
+      "@id": "dec:putAt",
+      "@type": "xsd:dateTime"
+    },
+    "decidedAt": {
+      "@id": "dec:decidedAt",
+      "@type": "xsd:dateTime"
+    },
+    "rankInSession": {
+      "@id": "dec:rankInSession",
+      "@type": "xsd:positiveInteger"
+    },
+    "sourcesOpened": {
+      "@id": "dec:sourcesOpened",
+      "@type": "xsd:nonNegativeInteger"
+    },
+    "urgency": {
+      "@id": "dec:urgency",
+      "@type": "@vocab"
+    },
+    "recommendationShown": {
+      "@id": "dec:recommendationShown",
+      "@type": "@vocab"
+    },
+    "successCriterion": {
+      "@id": "dec:successCriterion",
+      "@container": "@set"
+    },
+    "execution": {
+      "@id": "dec:execution",
+      "@type": "@vocab"
+    },
+    "reviewTrigger": "dec:reviewTrigger",
+    "dependsOn": {
+      "@id": "dec:dependsOn",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "Escalated": "dec:Escalated",
+    "SourcesUnavailable": "dec:SourcesUnavailable",
+    "Immediate": "dec:Immediate",
+    "SameDay": "dec:SameDay",
+    "Planned": "dec:Planned",
+    "BeforeChoice": "dec:BeforeChoice",
+    "AfterChoice": "dec:AfterChoice",
+    "NotShown": "dec:NotShown",
+    "NotStarted": "dec:NotStarted",
+    "CarriedOut": "dec:CarriedOut",
+    "Failed": "dec:Failed",
+    "Undone": "dec:Undone"
   }
 }

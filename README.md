@@ -1,7 +1,7 @@
 # decision
 
 A small vocabulary for the characteristics of a decision put to a person: what kind of choice it was, what was at
-stake, how much oversight it required, and how it ended. Version 0.1.0, 13 November 2026. Author: Laurent Lemonnier.
+stake, how much oversight it required, in what conditions the person decided, and what became of it. Version 0.2.0, 14 November 2026. Author: Laurent Lemonnier.
 
 **This is a vocabulary, not a standard.** One author wrote it; nobody else uses it yet. Its namespace is
 `https://w3id.org/decision#` (prefix `dec:`). It is not part of the Decision Provenance Standard and is not endorsed
@@ -20,26 +20,66 @@ terms only name the members of those records.
 
 ## The terms
 
-Two classes: `dec:Decision` and `dec:Option`. Sixteen properties:
+Two classes, `dec:Decision` and `dec:Option`, and thirty-three properties in five groups. Only the first group is the
+core; the four others were added in 0.2.0 and are optional.
+
+**Core** (0.1.0, unchanged)
 
 | Property | Says | Criterion |
 |---|---|---|
 | `dec:whyNow` | why the decision is put now | one or two sentences, as put to the person |
 | `dec:option` | an option put to the person | it was on the screen or in the document the person decided from |
 | `dec:recommendedOption` | the option the preparer recommended | one of the options put |
-| `dec:chosenOption` | the option the person retained | absent when refused or deferred |
+| `dec:chosenOption` | the option the person retained | absent when refused, deferred or escalated |
 | `dec:deadline` | when the decision loses its object | stated in what was put; absent otherwise |
 | `dec:nature` | Alert, Validation or Arbitration | no option put, one, two or more |
 | `dec:reversibility` | Reversible, Compensable or Irreversible | what the policy declares for the operation; the least reversible of several |
 | `dec:magnitude` | a number and a unit | stated in the proposal; absence is not zero |
 | `dec:affectsThirdParty` | true or false | the action reaches someone outside the decider's organisation |
 | `dec:legalEffect` | true or false | the action creates, changes or ends a right or an obligation of a person, or similarly significantly affects that person |
-| `dec:factualBasis` | SourcesRead, SourcesCited or Unsourced | every fact sourced and read for this decision; sourced; at least one fact unsourced |
+| `dec:factualBasis` | SourcesRead, SourcesCited, Unsourced or SourcesUnavailable | every fact sourced and read for this decision; sourced; at least one fact unsourced; a named source could not be read |
 | `dec:requiredOversight` | NoApproval, Confirmation or Signature | the least a person had to do before the action could proceed |
-| `dec:outcome` | Approved, Amended, Refused or Deferred | what the person decided; absent while open |
+| `dec:outcome` | Approved, Amended, Refused, Deferred or Escalated | what the person decided; absent while open |
 | `dec:classifiedUnder` | the policy, with its version, that assigned the classification | an IRI or a published identifier |
 | `dec:classifiedBy` | who or what applied that policy | a person, or a named system applying declared rules |
 | `dec:recordedIn` | a document that records the decision | an IRI, or a digest of its bytes |
+
+**Who**
+
+| Property | Says | Criterion |
+|---|---|---|
+| `dec:decider` | the one accountable person | an IRI or a published identifier |
+| `dec:preparedBy` | who or what prepared what was put | the author of the options and the recommendation, not of the choice |
+
+**Context**
+
+| Property | Says | Criterion |
+|---|---|---|
+| `dec:objective` | what the decision is meant to achieve | as stated in what was put |
+| `dec:assumption` | something taken as true without a source | stated as an assumption in what was put |
+| `dec:statedRisk` | a risk named to the person | it was shown; a risk known and not shown is not stated |
+| `dec:contextVersion` | the version of the facts the proposal was built from | an identifier or a digest |
+| `dec:shownContent` | what the person decided from, as rendered | an IRI or a digest of the view or the document |
+
+**Conditions** (they describe a person's behaviour: record the least that serves, show it to the person, keep it out of any assessment of the person)
+
+| Property | Says | Criterion |
+|---|---|---|
+| `dec:putAt` | when the decision was put before the person | shown, or sent when only the sending is known |
+| `dec:decidedAt` | when the person gave the outcome | never earlier than `putAt` |
+| `dec:rankInSession` | which decision of the session it was | one, plus the confirmations and signatures already given in the same session |
+| `dec:sourcesOpened` | how many named sources the person opened | counted by the system; absent when it does not count |
+| `dec:urgency` | Immediate, SameDay or Planned | the band the policy assigns |
+| `dec:recommendationShown` | BeforeChoice, AfterChoice or NotShown | whether the recommendation was visible when the person began to choose |
+
+**Follow-up**
+
+| Property | Says | Criterion |
+|---|---|---|
+| `dec:successCriterion` | how success will be judged | stated before the action is taken |
+| `dec:execution` | NotStarted, CarriedOut, Failed or Undone | from the record of the action; only for an approved or amended decision |
+| `dec:reviewTrigger` | when the decision is to be put again | a date, an event, a threshold |
+| `dec:dependsOn` | a decision that must be decided first | names the other decision |
 
 The definitions are in [vocab/decision.ttl](vocab/decision.ttl) (RDFS and SKOS) and repeated in [vocab.md](vocab.md).
 The JSON-LD 1.1 context is [context/decision.context.jsonld](context/decision.context.jsonld), also at
@@ -48,22 +88,50 @@ The JSON-LD 1.1 context is [context/decision.context.jsonld](context/decision.co
 Two rules hold the rest together. A classification names the policy that assigned it (`dec:classifiedUnder`): without
 one it is an opinion. And a value that was not recorded is left out: absence never means "none" or "zero".
 
+## Where the 0.2.0 terms come from
+
+The added terms were drawn from two sides and set against each other: an interface for deciding that the author's
+organisation specified in 2025 and 2026 (its data model, and the table mapping that model to the screen), and
+published work. Where one side is silent, the table says so.
+
+| In the interface specification | In published work | Term |
+|---|---|---|
+| a context snapshot per decision: objective, risks, assumptions, with a version that can be compared | the Decision Provenance Standard's record: assumptions depended on, context at decision | `objective`, `assumption`, `statedRisk`, `contextVersion` |
+| "a critical action does not leave with a stale version"; the prepared action shows its content, version and digest | W3C Secure Payment Confirmation: what is displayed is what is signed | `shownContent`, `contextVersion` |
+| a queue in three bands (now, today, to prepare), ordered by a deterministic rule | interruption research: a task boundary is a less costly moment than the middle of a task (Iqbal and Bailey, CHI 2008; Fischer et al., MobileHCI 2011) | `urgency` |
+| every action shown says "why now"; one recommended action, two others at most | Buçinca, Malaya and Gajos (CSCW 2021): making a person commit before seeing the system's answer reduces over-reliance | `recommendationShown` |
+| silent on counting; it only limits what is shown at once (eight situations per page) and refuses, in writing, infinite scrolling and artificial reward | Regulation (EU) 2024/1689, Article 14(4)(b): remain aware of automation bias; practitioners' accounts of approval fatigue (time to approve falling, approval rate rising) | `putAt`, `decidedAt`, `rankInSession`, `sourcesOpened` |
+| sources shown as "none", "not synchronised", "access withdrawn" or "deleted", never as absent | nothing found | value `SourcesUnavailable` |
+| the action's state (to do, doing, done, blocked), its receipt, its log | the Standard's success criteria and re-decision trigger | `successCriterion`, `execution`, `reviewTrigger` |
+| a dependency between decisions ("blocked by"); a validation that says "validated by" | the Standard's accountable owner, drafting authority and related decisions | `dependsOn`, `decider`, `preparedBy`, value `Escalated` |
+
 ## Examples
 
-[examples](examples) holds four invented documents, five decisions:
+[examples](examples) holds five invented documents, eight decisions:
 
-- `refund-validation.jsonld`: one proposal, a refund of 120.00 EUR, approved under a signature;
-- `maintenance-reapproval.jsonld`: a fix approved, run, rolled back after a failed check, then approved again as a new
+- `refund-validation.jsonld`: one proposal, a refund of 120.00 EUR, approved under a signature and carried out;
+- `maintenance-reapproval.jsonld`: a fix approved, run, undone after a failed check, then approved again as a new
   decision that replaces the first (modelled on a real case, every name removed);
-- `quote-arbitration.jsonld`: three quotes, one recommended, another retained;
-- `certificate-alert.jsonld`: a signal with no proposal, set aside.
+- `quote-arbitration.jsonld`: three quotes, one recommended, another retained in eight seconds, ninth decision of the
+  session;
+- `certificate-alert.jsonld`: a signal with no proposal, set aside;
+- `payment-escalation.jsonld`: a payment passed to someone with more authority because a source could not be read,
+  decided there after the person committed before seeing the recommendation, and a third decision that waits for it.
 
-The three queries in [queries](queries) answer, on those five decisions:
+The queries in [queries](queries) answer, on those eight decisions:
 
 - `irreversible-below-signature.rq`: one decision cannot be undone, reaches a third party and went through on a
   confirmation only (the quotes);
-- `recommendation-not-followed.rq`: one decision retained another option than the one recommended (the quotes);
-- `classified-without-policy.rq`: none; and with every `dec:classifiedUnder` dropped, all five (the negative control).
+- `recommendation-not-followed.rq`: two decisions retained another option than the one recommended;
+- `classified-without-policy.rq`: none; and with every `dec:classifiedUnder` dropped, all eight (the negative control);
+- `irreversible-times.rq`: when each irreversible decision was put and decided; computed from it, one was decided in
+  under thirty seconds (the quotes);
+- `late-in-session.rq`: one decision came eighth or later in its session (the quotes);
+- `undone-then-replaced.rq`: one action was undone and its decision replaced (the fix);
+- `open-dependencies.rq`: one decision waits for another, which is approved.
+
+That the same decision answers four of the queries is the point of the example: irreversible, on a confirmation,
+in eight seconds, late in the session.
 
 ## Tried on real decisions
 
@@ -73,23 +141,26 @@ published. From what they hold:
 
 | Could be assigned | Decisions |
 |---|---|
-| nature, required oversight, why now, options | 18 of 18 |
+| nature, required oversight, why now, options, decider, prepared by, recommendation shown (always before the choice, by design) | 18 of 18 |
+| context version, shown content (digests of the plan and of the view) | 17 of 18 |
 | factual basis (sourced or not; "read" and "cited" could not be told apart) | 16 of 18 |
 | outcome ("approved" and "amended" could not be told apart) | 14 of 18 |
+| put at and decided at (the request for a signature and the signature) | 13 of 18 |
 | affects a third party | 13 of 18 |
+| execution | 12 of 18 |
+| success criterion (the plan carries a check) | 11 of 18 |
 | reversibility | 8 of 18 |
-| magnitude, legal effect, deadline | 0 of 18 |
+| magnitude, legal effect, deadline, objective, assumption, urgency, rank in session, sources opened, review trigger, depends on | 0 of 18 |
 
 Reversibility failed on ten decisions because their plans used operations the organisation's scale does not list.
-Magnitude, legal effect and deadline were never recorded, and the policy version was written into the signed
-specification only from 13 November. So the trial says as much about what a system must record as about the terms:
-three properties could not be filled at all, and reversibility for fewer than half of the decisions, from records
-that were not written with these terms in mind.
+Ten properties were never recorded as such; stated risks could not be told from the records; and the policy version
+was written into the signed specification only from 13 November. So the trial says as much about what a system must record as about the terms.
 
 ## What it does not cover
 
-- The conditions in which the person decided: what was shown, in what order, for how long. Not in this version.
-- Relations between decisions. The second example uses `dcterms:replaces`; this vocabulary adds no term of its own.
+- Whether a decision was a good one, or whether the person understood it. The conditions group records what a
+  system can count; it measures neither attention nor judgement.
+- Replacement of one decision by another: the examples use `dcterms:replaces`.
 - Who was entitled to decide, and whether the approval is authentic. That is the work of a record format and its
   verifier, for example the Decision Provenance Standard with its action binding and signatures.
 - The logic of a rule-based decision, which DMN (Object Management Group) describes.
@@ -102,6 +173,14 @@ illustration", and the report recommended a working group. DecPROV (Nicholas Car
 PROV-O, to record decisions already made, and added an agent. Their terms describe the question, the making of the
 decision and the solution accepted. The pages of both name no term for reversibility, effect on a third party, legal
 effect or required oversight, which are what this vocabulary adds. Their ontology files were not read term by term.
+
+## Versions
+
+- 0.1.0, 13 November 2026: the core, sixteen properties.
+- 0.2.0, 14 November 2026: seventeen properties in four optional groups (who, context, conditions, follow-up), two
+  values (`Escalated`, `SourcesUnavailable`), three lists (urgency, recommendation shown, execution), one example,
+  four queries. No 0.1.0 term was removed or renamed; `chosenOption`, `factualBasis` and `outcome` take the new values
+  into account.
 
 ## Run
 

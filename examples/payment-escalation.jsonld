@@ -1,0 +1,109 @@
+{
+  "@context": [
+    "https://w3id.org/decision/context.jsonld",
+    {
+      "replaces": {
+        "@id": "http://purl.org/dc/terms/replaces",
+        "@type": "@id"
+      }
+    }
+  ],
+  "@graph": [
+    {
+      "id": "urn:example:decision:payment-7730:1",
+      "type": "Decision",
+      "label": "Pay a supplier's invoice of 48,000.00 EUR, four times the usual amount",
+      "whyNow": "The invoice is due in two days.",
+      "deadline": "2026-11-20T16:00:00Z",
+      "decider": "urn:example:person:accountant",
+      "preparedBy": "urn:example:system:payables",
+      "nature": "Validation",
+      "option": [
+        "urn:example:decision:payment-7730:pay"
+      ],
+      "recommendedOption": "urn:example:decision:payment-7730:pay",
+      "magnitude": {
+        "value": "48000.00",
+        "unit": "EUR"
+      },
+      "reversibility": "Compensable",
+      "affectsThirdParty": true,
+      "legalEffect": true,
+      "factualBasis": "SourcesUnavailable",
+      "requiredOversight": "Signature",
+      "urgency": "SameDay",
+      "recommendationShown": "BeforeChoice",
+      "putAt": "2026-11-18T09:02:00Z",
+      "decidedAt": "2026-11-18T09:20:00Z",
+      "rankInSession": 3,
+      "sourcesOpened": 1,
+      "outcome": "Escalated",
+      "classifiedUnder": "urn:example:policy:payments:5",
+      "classifiedBy": "urn:example:system:payables"
+    },
+    {
+      "id": "urn:example:decision:payment-7730:2",
+      "type": "Decision",
+      "label": "Pay the supplier's invoice of 48,000.00 EUR, or hold it",
+      "whyNow": "The accountant passed the decision on: the order it refers to could not be read.",
+      "deadline": "2026-11-20T16:00:00Z",
+      "replaces": "urn:example:decision:payment-7730:1",
+      "decider": "urn:example:person:finance-lead",
+      "preparedBy": "urn:example:system:payables",
+      "nature": "Arbitration",
+      "option": [
+        "urn:example:decision:payment-7730:pay",
+        "urn:example:decision:payment-7730:hold"
+      ],
+      "recommendedOption": "urn:example:decision:payment-7730:pay",
+      "chosenOption": "urn:example:decision:payment-7730:hold",
+      "magnitude": {
+        "value": "48000.00",
+        "unit": "EUR"
+      },
+      "reversibility": "Compensable",
+      "affectsThirdParty": true,
+      "legalEffect": true,
+      "factualBasis": "SourcesRead",
+      "requiredOversight": "Signature",
+      "urgency": "SameDay",
+      "recommendationShown": "AfterChoice",
+      "assumption": [
+        "The supplier accepts a payment three days late without penalty."
+      ],
+      "putAt": "2026-11-18T14:00:00Z",
+      "decidedAt": "2026-11-18T14:12:00Z",
+      "rankInSession": 1,
+      "sourcesOpened": 4,
+      "successCriterion": [
+        "The supplier confirms the corrected amount in writing before any payment."
+      ],
+      "execution": "CarriedOut",
+      "outcome": "Approved",
+      "classifiedUnder": "urn:example:policy:payments:5",
+      "classifiedBy": "urn:example:system:payables"
+    },
+    {
+      "id": "urn:example:decision:invoice-7730:close",
+      "type": "Decision",
+      "label": "Close the supplier's invoice in the accounts",
+      "whyNow": "Month-end closing.",
+      "decider": "urn:example:person:accountant",
+      "preparedBy": "urn:example:system:payables",
+      "dependsOn": [
+        "urn:example:decision:payment-7730:2"
+      ],
+      "nature": "Validation",
+      "option": [
+        "urn:example:decision:invoice-7730:close:as-booked"
+      ],
+      "recommendedOption": "urn:example:decision:invoice-7730:close:as-booked",
+      "reversibility": "Reversible",
+      "affectsThirdParty": false,
+      "requiredOversight": "Confirmation",
+      "urgency": "Planned",
+      "classifiedUnder": "urn:example:policy:payments:5",
+      "classifiedBy": "urn:example:system:payables"
+    }
+  ]
+}

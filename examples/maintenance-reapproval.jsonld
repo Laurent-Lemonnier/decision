@@ -31,7 +31,22 @@
       "requiredOversight": "Signature",
       "outcome": "Approved",
       "classifiedUnder": "urn:example:policy:maintenance:1",
-      "classifiedBy": "urn:example:system:maintenance-desk"
+      "classifiedBy": "urn:example:system:maintenance-desk",
+      "decider": "urn:example:person:owner",
+      "preparedBy": "urn:example:system:maintenance-desk",
+      "urgency": "SameDay",
+      "recommendationShown": "BeforeChoice",
+      "objective": "Remove the error the client reported, without changing anything else on the page.",
+      "successCriterion": [
+        "The page loads in a test browser with no error, and the script served is the corrected one."
+      ],
+      "contextVersion": "urn:example:site-fix:plan-v1",
+      "shownContent": "urn:example:view:site-fix:1",
+      "putAt": "2026-11-12T10:21:00Z",
+      "decidedAt": "2026-11-12T10:36:40Z",
+      "rankInSession": 1,
+      "sourcesOpened": 3,
+      "execution": "Undone"
     },
     {
       "id": "urn:example:decision:site-fix:2",
@@ -56,7 +71,28 @@
       "requiredOversight": "Signature",
       "outcome": "Approved",
       "classifiedUnder": "urn:example:policy:maintenance:1",
-      "classifiedBy": "urn:example:system:maintenance-desk"
+      "classifiedBy": "urn:example:system:maintenance-desk",
+      "decider": "urn:example:person:owner",
+      "preparedBy": "urn:example:system:maintenance-desk",
+      "urgency": "SameDay",
+      "recommendationShown": "BeforeChoice",
+      "objective": "Remove the error the client reported, without changing anything else on the page.",
+      "successCriterion": [
+        "The page loads in a test browser with no error, and the script served is the corrected one."
+      ],
+      "contextVersion": "urn:example:site-fix:plan-v3",
+      "shownContent": "urn:example:view:site-fix:2",
+      "putAt": "2026-11-12T11:48:00Z",
+      "decidedAt": "2026-11-12T11:52:30Z",
+      "rankInSession": 2,
+      "sourcesOpened": 1,
+      "execution": "CarriedOut",
+      "assumption": [
+        "The check failed because a short-lived cache served the old page, not because the fix was wrong."
+      ],
+      "statedRisk": [
+        "If the assumption is wrong, the same check fails again and the changes are rolled back a second time."
+      ]
     }
   ]
 }

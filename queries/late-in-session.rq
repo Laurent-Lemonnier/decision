@@ -1,0 +1,9 @@
+# Decisions requiring a confirmation or a signature that came eighth or later in the person's session.
+PREFIX dec: <https://w3id.org/decision#>
+SELECT ?decision ?rank WHERE {
+  ?decision a dec:Decision ;
+            dec:rankInSession ?rank ;
+            dec:requiredOversight ?oversight .
+  FILTER (?oversight != dec:NoApproval && ?rank >= 8)
+}
+ORDER BY ?decision

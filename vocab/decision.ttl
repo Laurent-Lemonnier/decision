@@ -11,9 +11,10 @@
     dcterms:title "decision: a small vocabulary for the characteristics of a decision put to a person"@en ;
     dcterms:creator "Laurent Lemonnier" ;
     dcterms:issued "2026-11-13"^^xsd:date ;
+    dcterms:modified "2026-11-14"^^xsd:date ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-    owl:versionInfo "0.1.0" ;
-    rdfs:comment "A vocabulary, not a standard. Two classes, sixteen properties and four lists of values. It describes the decision itself; it says nothing of where a record came from, how it is signed or how it is verified."@en .
+    owl:versionInfo "0.2.0" ;
+    rdfs:comment "A vocabulary, not a standard. Two classes, thirty-three properties and eight lists of values, in five groups; every group but the first is optional. It describes the decision itself; it says nothing of where a record came from, how it is signed or how it is verified."@en .
 
 # Classes
 
@@ -41,7 +42,7 @@ dec:recommendedOption a rdf:Property ;
 
 dec:chosenOption a rdf:Property ;
     rdfs:label "chosen option"@en ; rdfs:domain dec:Decision ; rdfs:range dec:Option ;
-    rdfs:comment "The option the person retained. Absent when the outcome is Refused or Deferred."@en .
+    rdfs:comment "The option the person retained. Absent when the outcome is Refused, Deferred or Escalated."@en .
 
 dec:deadline a rdf:Property ;
     rdfs:label "deadline"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:dateTime ;
@@ -122,6 +123,8 @@ dec:SourcesCited a skos:Concept ; skos:inScheme dec:FactualBasisScheme ; skos:pr
     skos:definition "The proposal names sources for its facts, and at least one was not read again for this decision."@en .
 dec:Unsourced a skos:Concept ; skos:inScheme dec:FactualBasisScheme ; skos:prefLabel "Unsourced"@en ;
     skos:definition "At least one fact the proposal relies on names no source."@en .
+dec:SourcesUnavailable a skos:Concept ; skos:inScheme dec:FactualBasisScheme ; skos:prefLabel "Sources unavailable"@en ;
+    skos:definition "A source the proposal names could not be read when the decision was put: not synchronised, access withdrawn, or deleted. Added in 0.2.0."@en .
 
 dec:OversightScheme a skos:ConceptScheme ; rdfs:label "Required oversight"@en .
 dec:NoApproval a skos:Concept ; skos:inScheme dec:OversightScheme ; skos:prefLabel "No approval"@en ;
@@ -140,3 +143,115 @@ dec:Refused a skos:Concept ; skos:inScheme dec:OutcomeScheme ; skos:prefLabel "R
     skos:definition "The person decided that no option put is to be carried out."@en .
 dec:Deferred a skos:Concept ; skos:inScheme dec:OutcomeScheme ; skos:prefLabel "Deferred"@en ;
     skos:definition "The person set the decision aside without accepting or refusing; it may be put again."@en .
+dec:Escalated a skos:Concept ; skos:inScheme dec:OutcomeScheme ; skos:prefLabel "Escalated"@en ;
+    skos:definition "The person passed the decision to someone with more authority, without deciding it. Added in 0.2.0."@en .
+
+# ---------------------------------------------------------------------------------------------------------------
+# Added in 0.2.0. Four optional groups. The 0.1.0 terms above are unchanged.
+# ---------------------------------------------------------------------------------------------------------------
+
+# Group "who": the roles in the decision. Whether the person is who the record says is the record's business.
+
+dec:decider a rdf:Property ;
+    rdfs:label "decider"@en ; rdfs:domain dec:Decision ;
+    rdfs:comment "The one accountable person the decision is put to, or who makes it: an IRI or an identifier the organisation publishes."@en .
+
+dec:preparedBy a rdf:Property ;
+    rdfs:label "prepared by"@en ; rdfs:domain dec:Decision ;
+    rdfs:comment "Who or what prepared what was put to the decider: a person, or a named system. Criterion: the author of the options and of the recommendation, not of the final choice."@en .
+
+# Group "context": what the decision rested on when it was put.
+
+dec:objective a rdf:Property ;
+    rdfs:label "objective"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:string ;
+    rdfs:comment "What the decision is meant to achieve, as stated in what was put to the person."@en .
+
+dec:assumption a rdf:Property ;
+    rdfs:label "assumption"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:string ;
+    rdfs:comment "Something taken as true without a source when the decision was put, and said to be so. Criterion: stated as an assumption in what was put; a fact with a source is not an assumption."@en .
+
+dec:statedRisk a rdf:Property ;
+    rdfs:label "stated risk"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:string ;
+    rdfs:comment "A risk named in what was put to the person. Criterion: it was on the screen or in the document the person decided from; a risk known to the preparer and not shown is not stated."@en .
+
+dec:contextVersion a rdf:Property ;
+    rdfs:label "context version"@en ; rdfs:domain dec:Decision ;
+    rdfs:comment "The version of the facts the proposal was built from: an identifier, or a digest of their bytes. It lets a reader tell a decision taken on facts that had changed since."@en .
+
+dec:shownContent a rdf:Property ;
+    rdfs:label "shown content"@en ; rdfs:domain dec:Decision ;
+    rdfs:comment "What the person decided from, as rendered: an IRI, or a digest of the bytes of the view or the document. When the oversight is a Signature, the signature should cover it."@en .
+
+# Group "conditions": the conditions in which the person decided, as recorded by the system that put the decision.
+# These describe a person's behaviour. Record the least that serves, show it to the person, and keep it out of any
+# assessment of the person.
+
+dec:putAt a rdf:Property ;
+    rdfs:label "put at"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:dateTime ;
+    rdfs:comment "When the decision was put before the person: shown on a screen, or sent. When only the sending is known, it is the sending."@en .
+
+dec:decidedAt a rdf:Property ;
+    rdfs:label "decided at"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:dateTime ;
+    rdfs:comment "When the person gave the outcome. Never earlier than putAt."@en .
+
+dec:rankInSession a rdf:Property ;
+    rdfs:label "rank in session"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:positiveInteger ;
+    rdfs:comment "One, plus the number of decisions requiring a Confirmation or a Signature that the same person had already decided in the same authenticated session."@en .
+
+dec:sourcesOpened a rdf:Property ;
+    rdfs:label "sources opened"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:nonNegativeInteger ;
+    rdfs:comment "How many of the sources named in what was put the person opened between putAt and decidedAt, as counted by the system. Absent when the system does not count."@en .
+
+dec:urgency a rdf:Property ;
+    rdfs:label "urgency"@en ; rdfs:domain dec:Decision ; rdfs:range skos:Concept ;
+    rdfs:comment "When the policy asks for the decision, in three bands."@en .
+
+dec:recommendationShown a rdf:Property ;
+    rdfs:label "recommendation shown"@en ; rdfs:domain dec:Decision ; rdfs:range skos:Concept ;
+    rdfs:comment "Whether the person saw the preparer's recommendation before committing to a choice."@en .
+
+# Group "follow-up": what became of the decision, and how decisions relate.
+
+dec:successCriterion a rdf:Property ;
+    rdfs:label "success criterion"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:string ;
+    rdfs:comment "How it will be judged that the action did what was intended, stated before the action is taken."@en .
+
+dec:execution a rdf:Property ;
+    rdfs:label "execution"@en ; rdfs:domain dec:Decision ; rdfs:range skos:Concept ;
+    rdfs:comment "What became of the action decided. Meaningful only when the outcome is Approved or Amended."@en .
+
+dec:reviewTrigger a rdf:Property ;
+    rdfs:label "review trigger"@en ; rdfs:domain dec:Decision ; rdfs:range xsd:string ;
+    rdfs:comment "The condition under which the decision is to be put again: a date, an event, a threshold."@en .
+
+dec:dependsOn a rdf:Property ;
+    rdfs:label "depends on"@en ; rdfs:domain dec:Decision ; rdfs:range dec:Decision ;
+    rdfs:comment "Another decision whose outcome must be known before this one can be carried out."@en .
+
+# Values added in 0.2.0
+
+dec:UrgencyScheme a skos:ConceptScheme ; rdfs:label "Urgency"@en .
+dec:Immediate a skos:Concept ; skos:inScheme dec:UrgencyScheme ; skos:prefLabel "Immediate"@en ;
+    skos:definition "The policy asks for the decision before the person takes up anything else: a deadline already passed, a blocked delivery, a critical signal."@en .
+dec:SameDay a skos:Concept ; skos:inScheme dec:UrgencyScheme ; skos:prefLabel "Same day"@en ;
+    skos:definition "The policy asks for the decision within the working day."@en .
+dec:Planned a skos:Concept ; skos:inScheme dec:UrgencyScheme ; skos:prefLabel "Planned"@en ;
+    skos:definition "The decision can wait for a time the person sets aside for it."@en .
+
+dec:RecommendationShownScheme a skos:ConceptScheme ; rdfs:label "Recommendation shown"@en .
+dec:BeforeChoice a skos:Concept ; skos:inScheme dec:RecommendationShownScheme ; skos:prefLabel "Before choice"@en ;
+    skos:definition "The recommendation was visible when the person began to choose."@en .
+dec:AfterChoice a skos:Concept ; skos:inScheme dec:RecommendationShownScheme ; skos:prefLabel "After choice"@en ;
+    skos:definition "The person first committed to a choice; the recommendation was shown afterwards, and the person could still change."@en .
+dec:NotShown a skos:Concept ; skos:inScheme dec:RecommendationShownScheme ; skos:prefLabel "Not shown"@en ;
+    skos:definition "No recommendation was shown to the person."@en .
+
+dec:ExecutionScheme a skos:ConceptScheme ; rdfs:label "Execution"@en .
+dec:NotStarted a skos:Concept ; skos:inScheme dec:ExecutionScheme ; skos:prefLabel "Not started"@en ;
+    skos:definition "The action decided has not begun."@en .
+dec:CarriedOut a skos:Concept ; skos:inScheme dec:ExecutionScheme ; skos:prefLabel "Carried out"@en ;
+    skos:definition "The action decided was completed and its success criterion, when one was stated, was met."@en .
+dec:Failed a skos:Concept ; skos:inScheme dec:ExecutionScheme ; skos:prefLabel "Failed"@en ;
+    skos:definition "The action decided began and did not complete, or its success criterion was not met, and its effects remain."@en .
+dec:Undone a skos:Concept ; skos:inScheme dec:ExecutionScheme ; skos:prefLabel "Undone"@en ;
+    skos:definition "The action decided began, and its effects were then removed or offset."@en .

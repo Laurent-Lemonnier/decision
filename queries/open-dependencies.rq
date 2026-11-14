@@ -1,0 +1,7 @@
+# Decisions that wait for another decision, with the outcome of the one they wait for.
+PREFIX dec: <https://w3id.org/decision#>
+SELECT ?decision ?waitsFor ?outcome WHERE {
+  ?decision a dec:Decision ; dec:dependsOn ?waitsFor .
+  OPTIONAL { ?waitsFor dec:outcome ?outcome }
+}
+ORDER BY ?decision

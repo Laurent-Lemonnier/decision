@@ -13,7 +13,10 @@
   ],
   "recommendedOption": "urn:example:decision:quotes-0912:quote-b",
   "chosenOption": "urn:example:decision:quotes-0912:quote-a",
-  "magnitude": {"value": "1840.00", "unit": "EUR per year"},
+  "magnitude": {
+    "value": "1840.00",
+    "unit": "EUR per year"
+  },
   "reversibility": "Irreversible",
   "affectsThirdParty": true,
   "legalEffect": false,
@@ -21,5 +24,21 @@
   "requiredOversight": "Confirmation",
   "outcome": "Approved",
   "classifiedUnder": "urn:example:policy:advice:2",
-  "classifiedBy": "urn:example:person:office-manager"
+  "classifiedBy": "urn:example:person:office-manager",
+  "decider": "urn:example:person:adviser",
+  "preparedBy": "urn:example:system:quote-desk",
+  "objective": "Recommend to the client the quote that covers the stated needs at the lowest yearly cost.",
+  "statedRisk": [
+    "Quote A excludes one of the client's two sites."
+  ],
+  "contextVersion": "urn:example:client-0912:needs:v2",
+  "shownContent": "urn:example:view:quotes-0912:v1",
+  "putAt": "2026-11-12T16:41:02Z",
+  "decidedAt": "2026-11-12T16:41:10Z",
+  "rankInSession": 9,
+  "sourcesOpened": 0,
+  "urgency": "Planned",
+  "recommendationShown": "BeforeChoice",
+  "execution": "NotStarted",
+  "reviewTrigger": "Thirty days before the renewal date of the contract retained."
 }

@@ -1,0 +1,10 @@
+# When each decision that cannot be undone was put and decided. SPARQL 1.1 does not subtract dates:
+# the caller computes the time the person took (tests/check.py does, with a threshold of thirty seconds).
+PREFIX dec: <https://w3id.org/decision#>
+SELECT ?decision ?putAt ?decidedAt WHERE {
+  ?decision a dec:Decision ;
+            dec:reversibility dec:Irreversible ;
+            dec:putAt ?putAt ;
+            dec:decidedAt ?decidedAt .
+}
+ORDER BY ?decision
