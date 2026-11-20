@@ -107,7 +107,7 @@ published work. Where one side is silent, the table says so.
 
 ## Examples
 
-[examples](examples) holds five invented documents, eight decisions:
+[examples](examples) holds six invented documents, nine decisions:
 
 - `refund-validation.jsonld`: one proposal, a refund of 120.00 EUR, approved under a signature and carried out;
 - `maintenance-reapproval.jsonld`: a fix approved, run, undone after a failed check, then approved again as a new
@@ -116,14 +116,16 @@ published work. Where one side is silent, the table says so.
   session;
 - `certificate-alert.jsonld`: a signal with no proposal, set aside;
 - `payment-escalation.jsonld`: a payment passed to someone with more authority because a source could not be read,
-  decided there after the person committed before seeing the recommendation, and a third decision that waits for it.
+  decided there after the person committed before seeing the recommendation, and a third decision that waits for it;
+- `recorded-refund.jsonld`: a refund whose record is public and named by the digest of its bytes (see the next
+  section).
 
-The queries in [queries](queries) answer, on those eight decisions:
+The queries in [queries](queries) answer, on those nine decisions:
 
 - `irreversible-below-signature.rq`: one decision cannot be undone, reaches a third party and went through on a
   confirmation only (the quotes);
 - `recommendation-not-followed.rq`: two decisions retained another option than the one recommended;
-- `classified-without-policy.rq`: none; and with every `dec:classifiedUnder` dropped, all eight (the negative control);
+- `classified-without-policy.rq`: none; and with every `dec:classifiedUnder` dropped, all nine (the negative control);
 - `irreversible-times.rq`: when each irreversible decision was put and decided; computed from it, one was decided in
   under thirty seconds (the quotes);
 - `late-in-session.rq`: one decision came eighth or later in its session (the quotes);
@@ -132,6 +134,43 @@ The queries in [queries](queries) answer, on those eight decisions:
 
 That the same decision answers four of the queries is the point of the example: irreversible, on a confirmation,
 in eight seconds, late in the session.
+
+## One decision described here and recorded elsewhere
+
+`recorded-refund.jsonld` describes a decision whose record is public: the refund of the `one-chain` case in
+[dps-scitt-decision-layer](https://github.com/Laurent-Lemonnier/dps-scitt-decision-layer/tree/21cf862c1ed6c70349cf7ad29654b56b839abb46/interop/one-chain),
+a synthetic case recorded under the Decision Provenance Standard. `dec:recordedIn` names the record three ways:
+
+- by the SHA-256 of the bytes of `decision-record.json`, written as an RFC 6920 `ni:` URI (in hex,
+  `056a7135a4a71cd429177e2c4ad2a51d004fe45872a7cec76f290f92f2e61ace`; `sha256sum` on the file at the pinned commit
+  gives it);
+- by the address of that file at the pinned commit;
+- by the entry, in the transparency log ts.isoluce.net (leaf 0), of the action-binding attachment A1, the one sealed
+  at the approval. The log does not hold `decision-record.json` itself, and A1 stops at the outcome: the run is in
+  A2, which has its own entry.
+
+Where each value of the example comes from:
+
+| Terms | Source in the record |
+|---|---|
+| `label`, `whyNow` | `decision_statement`, `context_at_decision` |
+| `nature`, `option` | the view the person signed (`review-view.txt`) shows one refund: one option was put. The record's `options_considered` lists three options its drafter weighed; they were not put to the person |
+| `magnitude`, `classifiedUnder` | the view: the amount, the policy and its version |
+| `requiredOversight`, `outcome`, `decidedAt` | the person's signed approval (`signatures-attachment.json`, stage `o1`) |
+| `shownContent` | `shown_view_digest`, which that signature covers |
+| `putAt` | the review stage `v1` |
+| `decider`, `preparedBy` | the accountable owner; the drafting authority |
+| `assumption`, `successCriterion`, `reviewTrigger` | `assumptions_depended_on`, `success_criteria`, `re_decision_trigger` |
+| `execution` | the attempt and result stages of the second attachment |
+| `reversibility`, `affectsThirdParty`, `legalEffect`, `factualBasis` | no member of the record carries them: they are this example's own classification |
+| `recommendedOption`, `chosenOption`, `recommendationShown` | the record has no recommendation member. The proposal is the drafting system's (stage `p1`, 10:00:03), the person's review (`v1`, 10:00:40) shows it, and the approval (`o1`) retains it: so the one option is both recommended and chosen, and shown before the choice. That is this example's reading, not a member of the record |
+| the identifiers of the decision and of its option | invented for the example; the record's `decision_id` is `DR-2026-1104` |
+| `classifiedBy`, `contextVersion`, `urgency`, `rankInSession`, `sourcesOpened` | not in the record, and left out |
+
+The two do different work. The record and its verifier answer whether the approval is authentic, what exactly was
+approved and whether what ran was that. This document says what kind of decision it was, so that it can be queried
+with others. Nothing in this repository checks the digest or the signature. The mapping is the author's reading; the
+Standard's Steward has not reviewed it.
 
 ## Tried on real decisions
 
@@ -172,7 +211,9 @@ in 2012. Its sample decision ontology says of itself that it is "not a proposal 
 illustration", and the report recommended a working group. DecPROV (Nicholas Car) later aligned that ontology with
 PROV-O, to record decisions already made, and added an agent. Their terms describe the question, the making of the
 decision and the solution accepted. The pages of both name no term for reversibility, effect on a third party, legal
-effect or required oversight, which are what this vocabulary adds. Their ontology files were not read term by term.
+effect or required oversight, which are what this vocabulary adds. The Decision Ontology file was not read term by term.
+DecPROV 2.0 was later read in full: [alignments/decprov.md](alignments/decprov.md) says where each term here would sit
+in it. That table is the author's reading; nothing in this repository asserts an equivalence.
 
 ## Versions
 
@@ -181,6 +222,8 @@ effect or required oversight, which are what this vocabulary adds. Their ontolog
   values (`Escalated`, `SourcesUnavailable`), three lists (urgency, recommendation shown, execution), one example,
   four queries. No 0.1.0 term was removed or renamed; `chosenOption`, `factualBasis` and `outcome` take the new values
   into account.
+- 14 November 2026, still 0.2.0: one example added, `recorded-refund.jsonld`, that names a public record by the
+  digest of its bytes. No term added or changed.
 
 ## Run
 

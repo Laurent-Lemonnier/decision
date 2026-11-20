@@ -1,0 +1,43 @@
+{
+  "@context": "https://w3id.org/decision/context.jsonld",
+  "id": "urn:example:decision:DR-2026-1104",
+  "type": "Decision",
+  "label": "Refund 120.00 EUR on order 8812 for the duplicate charge of 2 November 2026",
+  "whyNow": "Ticket 4410 reports a duplicate charge; the invoicing agent prepared the refund and the policy requires the finance controller's confirmation above 50.00 EUR.",
+  "nature": "Validation",
+  "option": [
+    "urn:example:decision:DR-2026-1104:refund-now"
+  ],
+  "recommendedOption": "urn:example:decision:DR-2026-1104:refund-now",
+  "chosenOption": "urn:example:decision:DR-2026-1104:refund-now",
+  "magnitude": {
+    "value": "120.00",
+    "unit": "EUR"
+  },
+  "reversibility": "Irreversible",
+  "affectsThirdParty": true,
+  "legalEffect": true,
+  "factualBasis": "SourcesRead",
+  "requiredOversight": "Signature",
+  "outcome": "Approved",
+  "classifiedUnder": "urn:example:policy:refunds#2026-10-01",
+  "recordedIn": [
+    "ni:///sha-256;BWpxNaSnHNQpF34sStKlHQBP5Fhyp87HbykPkvLmGs4",
+    "https://github.com/Laurent-Lemonnier/dps-scitt-decision-layer/blob/21cf862c1ed6c70349cf7ad29654b56b839abb46/interop/one-chain/out/positive/decision-record.json",
+    "https://ts.isoluce.net/entries/03cabe49ce79f40b50e4b0744469dede7fc19123c998474f2fc1d7419634fda8"
+  ],
+  "decider": "urn:example:person:finance-controller-1",
+  "preparedBy": "urn:example:system:invoicing-assistant",
+  "assumption": [
+    "The second capture of 2 November 2026 is a duplicate and not a second order."
+  ],
+  "shownContent": "ni:///sha-256;x1EvoRBTvHVAX627ByZ0ssW_7JhwEwYuCrp7yaeL6ng",
+  "putAt": "2026-11-04T10:00:40Z",
+  "decidedAt": "2026-11-04T10:01:10Z",
+  "recommendationShown": "BeforeChoice",
+  "successCriterion": [
+    "One refund of 120.00 EUR accepted by the payments API, and no second one for the same charge."
+  ],
+  "execution": "CarriedOut",
+  "reviewTrigger": "A second refund request for the same order."
+}
